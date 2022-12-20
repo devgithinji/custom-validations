@@ -1,6 +1,9 @@
 package com.example.jpatest.model;
 
+import com.fasterxml.jackson.annotation.*;
+
 import javax.persistence.*;
+import java.util.Objects;
 
 @Entity
 @Table(name = "instructor")
@@ -18,6 +21,7 @@ public class Instructor {
     @Column(name = "email")
     private String email;
 
+    @JsonIgnoreProperties("instructor")
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "instructor_detail_id")
     private InstructorDetail instructorDetail;
@@ -69,5 +73,18 @@ public class Instructor {
 
     public void setInstructorDetail(InstructorDetail instructorDetail) {
         this.instructorDetail = instructorDetail;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Instructor that = (Instructor) o;
+        return id == that.id && firstName.equals(that.firstName) && lastName.equals(that.lastName) && email.equals(that.email);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, firstName, lastName, email);
     }
 }

@@ -32,7 +32,7 @@ public class InstructorController {
 
     @DeleteMapping
     public String deleteInstructor() {
-        instructorRepo.deleteById(2);
+        instructorRepo.deleteById(4);
         return "instructor deleted";
     }
 }
